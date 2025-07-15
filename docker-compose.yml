@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  api1:
+    build: 
+      context: ./api1
+      dockerfile: Dockerfile
+    container_name: api1_container
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - API2_URL=http://api2:5000
+    depends_on:
+      - api2
+    networks:
+      - app-network
+    volumes:
+      - ./api1:/app
+
+  api2:
+    build:
+      context: ./api2
+      dockerfile: Dockerfile
+    container_name: api2_container
+    ports:
+      - "5002:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    networks:
+      - app-network
+    volumes:
+      - ./api2:/app
+
+networks:
+  app-network:
+    driver: bridge
