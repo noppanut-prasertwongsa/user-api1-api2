@@ -20,25 +20,11 @@ project/
 
 ## วิธีการใช้งาน
 
-### 1. สร้างโครงสร้างโฟลเดอร์
 ```bash
-mkdir project
-cd project
-mkdir api1 api2
-```
-
-### 2. คัดลอกไฟล์ทั้งหมดไปยังตำแหน่งที่ถูกต้อง
-
-### 3. รันระบบ
-```bash
-# Build และ start containers
 docker-compose up --build
-
-# หรือรันใน background
-docker-compose up -d --build
 ```
 
-### 4. ตรวจสอบการทำงาน
+### ตรวจสอบการทำงาน
 - API1: http://localhost:5001
 - API2: http://localhost:5002
 
@@ -128,45 +114,12 @@ Invoke-RestMethod -Uri "http://localhost:5002/calculate" -Method POST -ContentTy
 4. **API2** ส่งผลลัพธ์กลับไปที่ **API1**
 5. **API1** ส่งผลลัพธ์รวมกลับไปยัง client
 
-## การดู Logs
 
-```bash
-# ดู logs ของ API1
-docker-compose logs api1
+### ตัวอย่างการทดสอบเรียก จาก postman และแสดง log
 
-# ดู logs ของ API2
-docker-compose logs api2
+ตัวอย่างที่ 1 user call api1 ให้เรียก api2 แล้วส่งผลลัพธ์ hello กลับมา
+![ตัวอย่างผลลัพธ์จาก Postman call hello](./images/hello.png)
 
-# ดู logs แบบ real-time
-docker-compose logs -f
-```
 
-## การหยุดระบบ
-
-```bash
-# หยุดและลบ containers
-docker-compose down
-
-# หยุด containers แต่ไม่ลบ
-docker-compose stop
-```
-
-## Troubleshooting
-
-### ถ้า API1 ไม่สามารถติดต่อ API2 ได้
-1. ตรวจสอบว่าทั้ง 2 containers ทำงานอยู่:
-   ```bash
-   docker-compose ps
-   ```
-
-2. ตรวจสอบ network connectivity:
-   ```bash
-   docker-compose exec api1 ping api2
-   ```
-
-3. ตรวจสอบ logs เพื่อดู error message:
-   ```bash
-   docker-compose logs api1
-   ```
-
-"# user-api1-api2" 
+ตัวอย่างที่ 2 user call api1 ให้บวกเลขโดยใส่ตัวเลข2ตัวลงไปผ่านตัวแปรที่ชื่อ `num1` และ `num2` โดย api1 เรียก api2 เพื่อบวกเลข แล้วจากนั้น api2 จะส่งผลัพธ์การบวกเลข2ตัว กลับมาที่ api1 
+![ตัวอย่างผลลัพธ์จาก Postman call add_number](./images/add_number.png)

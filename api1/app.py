@@ -88,7 +88,6 @@ def add_numbers():
         
         return jsonify({
             'service': 'API1',
-            # 'WOW WOW': f'{API2_URL}/calculate',
             'message': 'Successfully calculated numbers with API2',
             'input': {'num1': num1, 'num2': num2},
             'response_from_api2': response.json()
